@@ -5,6 +5,10 @@ import HomePage from "./pages/HomePage";
 import DiscoverMoviesPage from "./pages/DiscoverPage";
 import NavBar from "./components/NavBar";
 
+// function AboutPage () {
+//   return <div></div>
+// }
+
 function App() {
   return (
     <div className="App">
@@ -12,7 +16,7 @@ function App() {
       <Switch>
         <Route path="/discover" component={DiscoverMoviesPage} />
         <Route path="/about" component={AboutPage} />
-        <Route path="/" component={HomePage} />
+        <Route path="/" exact={true} component={HomePage} />
       </Switch>
     </div>
   );

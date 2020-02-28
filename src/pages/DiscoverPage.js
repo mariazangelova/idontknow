@@ -4,7 +4,7 @@ import Movie from "../components/Movie";
 export default function DiscoverMobiesPage() {
   const [searchText, setMovie] = useState("");
 
-  const [searchState, setSearchState] = useState("searching");
+  const [searchState, setSearchState] = useState("");
 
   const search = async () => {
     const queryParam = encodeURIComponent(searchText);
@@ -18,7 +18,12 @@ export default function DiscoverMobiesPage() {
     let results = data.Search;
     let display = [];
     display = results.map(movie => (
-      <Movie title={movie.Title} year={movie.Year} poster={movie.Poster} />
+      <Movie
+        title={movie.Title}
+        year={movie.Year}
+        poster={movie.Poster}
+        id={movie.imdbID}
+      />
     ));
     setSearchState(display);
   };
@@ -30,16 +35,16 @@ export default function DiscoverMobiesPage() {
         <input
           value={searchText}
           onChange={e => setMovie(e.target.value)}
-          placeholder="Type here or just stare at the screen."
+          placeholder="Type here :)"
         />
         <button onClick={search}>Search</button>
       </p>
       <div>{searchState}</div>
       <p>
         {searchText ? (
-          <div>Wait a second!</div>
+          <div>Press on search when you finish typing ;)</div>
         ) : (
-          <div>Not searching actually</div>
+          <div>Not searching now</div>
         )}
       </p>
       <div>{setSearchState}</div>

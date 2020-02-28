@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Movie from "../components/Movie";
 
 export default function DiscoverMobiesPage() {
   const [searchText, setMovie] = useState("");
@@ -15,7 +16,10 @@ export default function DiscoverMobiesPage() {
     console.log("Success!", data.Search);
 
     let results = data.Search;
-    let display = results.map(movie => [movie.Title, movie.Year, movie.Poster]);
+    let display = [];
+    display = results.map(movie => (
+      <Movie title={movie.Title} year={movie.Year} poster={movie.Poster} />
+    ));
     setSearchState(display);
   };
 

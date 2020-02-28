@@ -38,16 +38,3 @@ export default function Details(props) {
     </div>
   );
 }
-
-// let showInfo = [];
-//     // showInfo = information.map(info => (
-
-//   <Info
-//     title={info.Title}
-//     year={info.Year}
-//     poster={info.Poster}
-//     id={info.imdbID}
-//   />
-// ));
-
-//     set_movieData(showInfo);

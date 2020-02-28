@@ -16,6 +16,7 @@ function App() {
     <div className="App">
       <NavBar />
       <Switch>
+        <Route path="/discover/:searchtext" component={DiscoverMoviesPage} />
         <Route path="/discover" component={DiscoverMoviesPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/" exact={true} component={HomePage} />

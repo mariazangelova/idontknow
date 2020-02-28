@@ -1,13 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import Movie from "../components/Movie";
 
 export default function DiscoverMobiesPage() {
   const [searchText, setMovie] = useState("");
 
   const [searchState, setSearchState] = useState("");
+  const history = useHistory();
+  const params = useParams();
+
+  const navigateToSearch = () => {
+    const routeParam = encodeURIComponent(searchText);
+    history.push(`/discover/${routeParam}`);
+  };
 
   const search = async () => {
-    const queryParam = encodeURIComponent(searchText);
+    if (params.searchtext === undefined) {
+      return null;
+    }
+    //const queryParam = encodeURIComponent(searchText);
+    console.log("??", params);
+    const queryParam = encodeURIComponent(params.searchtext);
 
     const data = await fetch(
       `https://omdbapi.com/?apikey=2bfe2d6&s=${queryParam}`
@@ -28,6 +41,10 @@ export default function DiscoverMobiesPage() {
     setSearchState(display);
   };
 
+  useEffect(() => {
+    search();
+  }, [params.searchtext]);
+
   return (
     <div>
       <h1>Discover some movies!</h1>
@@ -37,7 +54,7 @@ export default function DiscoverMobiesPage() {
           onChange={e => setMovie(e.target.value)}
           placeholder="Type here :)"
         />
-        <button onClick={search}>Search</button>
+        <button onClick={navigateToSearch}>Search</button>
       </p>
       <div>{searchState}</div>
       <p>

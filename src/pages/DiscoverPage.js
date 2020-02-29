@@ -46,15 +46,24 @@ export default function DiscoverMobiesPage() {
   }, [params.searchtext]);
 
   return (
-    <div>
+    <div className="page">
       <h1>Discover some movies!</h1>
       <p>
         <input
+          class="form-control mr-sm-2"
+          type="search"
+          aria-label="Search"
           value={searchText}
           onChange={e => setMovie(e.target.value)}
           placeholder="Type here :)"
         />
-        <button onClick={navigateToSearch}>Search</button>
+        <button
+          class="btn btn-outline-success my-1 my-sm-0"
+          type="submit"
+          onClick={navigateToSearch}
+        >
+          Search
+        </button>
       </p>
       <div>{searchState}</div>
       <p>

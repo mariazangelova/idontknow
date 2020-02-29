@@ -7,19 +7,16 @@ import NavBar from "./components/NavBar";
 import Movie from "./components/Movie";
 import Details from "./components/Details";
 
-// function AboutPage () {
-//   return <div></div>
-// }
-
 function App() {
   return (
-    <div className="App">
+    <div>
       <NavBar />
       <Switch>
         <Route path="/discover/:searchtext" component={DiscoverMoviesPage} />
         <Route path="/discover" component={DiscoverMoviesPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/" exact={true} component={HomePage} />
+        <Route path="/home" component={HomePage} />
         <Route path="/movie/:imdb_id" component={Details} />
       </Switch>
     </div>

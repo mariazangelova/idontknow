@@ -2,8 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Movie from "../components/Movie";
 
+function sortByTitle(movieA, movieB) {
+  return movieA.title.localeCompare(movieB.title);
+}
+
+function sortByYear(movieA, movieB) {
+  return movieB.year - movieA.year;
+}
+
 export default function DiscoverMobiesPage() {
   const [searchText, setMovie] = useState("");
+  const [sortBy, setSortBy] = useState("default");
 
   const [searchState, setSearchState] = useState("");
   const history = useHistory();
@@ -18,24 +27,28 @@ export default function DiscoverMobiesPage() {
     if (params.searchtext === undefined) {
       return null;
     }
-    //const queryParam = encodeURIComponent(searchText);
-    console.log("??", params);
     const queryParam = encodeURIComponent(params.searchtext);
 
     const data = await fetch(
       `https://omdbapi.com/?apikey=2bfe2d6&s=${queryParam}`
     ).then(r => r.json());
 
-    console.log("Success!", data.Search);
-
     let results = data.Search;
+    let sortedMovies;
+    sortBy === "title"
+      ? (sortedMovies = [...results].sort(sortByTitle))
+      : sortBy === "year"
+      ? (sortedMovies = [...results].sort(sortByYear))
+      : (sortedMovies = results);
+    console.log("set sort by", sortedMovies);
     let display = [];
-    display = results.map(movie => (
+    display = sortedMovies.map(movie => (
       <Movie
         title={movie.Title}
         year={movie.Year}
         poster={movie.Poster}
         id={movie.imdbID}
+        key={movie.imdbID}
       />
     ));
     setSearchState(display);
@@ -44,6 +57,10 @@ export default function DiscoverMobiesPage() {
   useEffect(() => {
     search();
   }, [params.searchtext]);
+
+  function changeSorting(event) {
+    return setSortBy(event.target.value);
+  }
 
   return (
     <div className="page">
@@ -65,6 +82,11 @@ export default function DiscoverMobiesPage() {
           Search
         </button>
       </p>
+      <select onChange={changeSorting}>
+        <option value="default">Default</option>
+        <option value="year">Sort by year</option>
+        <option value="title">Sort by title</option>
+      </select>
       <div>{searchState}</div>
       <p>
         {searchText ? (
@@ -73,7 +95,13 @@ export default function DiscoverMobiesPage() {
           <div>Not searching now</div>
         )}
       </p>
-      <div>{setSearchState}</div>
+      <p>
+        {!setSearchState ? (
+          <div>Searching...</div>
+        ) : (
+          <div>{setSearchState}</div>
+        )}
+      </p>
     </div>
   );
 }

@@ -10,8 +10,10 @@
     list-style: none;
     text-align: center;
     display: flex;
-    margin: 10px;
-    padding: 10px;
+  }
+  .li {
+    margin-left: 10px;
+    margin-top: 5px;
     justify-content: space-between;
   }
 }
